@@ -1,0 +1,20 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: english-font;
+    src: url(Lato-Regular.ttf);
+}
+
+
+body {
+    /* background-color: #181926; */
+    background-color: #0a0101;
+    font-family: english-font, sans-serif;
+    color: #d4cdcd;
+    fill: #d4cdcd; 
+    margin: 0;
+}

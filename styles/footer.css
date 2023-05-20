@@ -1,0 +1,52 @@
+footer {
+    background-color: #070000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    height: 10rem;
+}
+
+footer h3 {
+    margin: 0.9rem 0;
+    letter-spacing: 1px;
+}
+
+footer div a {
+    color: inherit;
+    text-decoration: none;
+    margin: 0.5rem 0.8rem;
+}
+
+
+footer div a svg {
+    height: 2rem;
+    width: 2rem;
+}
+
+footer .social-logo {
+    transition: color 0.2s ease-in-out, backgtound-color 0.3s ease-in-out;
+}
+
+footer .social-logo:nth-child(1):hover {
+    color: #2da0da;
+}
+
+footer .social-logo:nth-child(2):hover {
+    color: #605f5d;
+}
+
+footer .social-logo:nth-child(3):hover {
+    color: #418ed6;
+}
+
+#mail {
+    margin: .9rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+#mail:hover {
+    text-decoration: underline;
+}
