@@ -50,3 +50,27 @@ footer .social-logo:nth-child(3):hover {
 #mail:hover {
     text-decoration: underline;
 }
+
+#navigation {
+    margin-bottom: 4rem;
+}
+
+#navigation a {
+    margin: 0.3rem 0.5rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+#theme {
+    margin: 0.3rem 0.5rem;
+    cursor: pointer;
+}
+
+#theme:hover {
+    text-decoration: underline;
+}
+
+
+#navigation a:hover {
+    text-decoration: underline;
+}

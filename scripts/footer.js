@@ -16,6 +16,9 @@ footer.innerHTML = `
     </a>
 </div>
 <a id="mail" href="mailto:sakibul706@gmail.com">sakibul706@gmail.com</a>
+<div id="navigation">
+    <a href="/">Home</a> | <a href="/projects">Projects</a> | <a href="/about">About</a> | <span id="theme">????</span>
+</div>
 `
 
 // all these fot footer to stick agin js :)
@@ -23,12 +26,14 @@ const linkHeight = document.getElementById('links').getBoundingClientRect().bott
 const footerPositon = footer.getBoundingClientRect().height
 footerPositonCalc()
 
-window.addEventListener("resize", footerPositonCalc);
+
+setInterval(() => {
+    window.addEventListener("resize", footerPositonCalc);
+}, 1000);
 
 function footerPositonCalc() {
-    console.log(linkHeight, footerPositon, window.innerHeight)
     if (linkHeight + footerPositon > window.innerHeight) {
-        footer.style.marginTop = "1rem";
+        footer.style.marginTop = "4rem";
     } else {
         footer.style.marginTop = `${(window.innerHeight - footerPositon) - linkHeight + 10}px`;
     }

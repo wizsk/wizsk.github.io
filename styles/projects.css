@@ -29,22 +29,36 @@ h1 {
     object-fit: contain;
 }
 
+
+
 .pr-container .pr-item a {
-    font-size: 1.5rem;
+    text-align: center;
+    font-size: 1.2rem;
     text-decoration: none;
     color: inherit;
-    margin-bottom: 1rem;
-    font-weight: 500;
+    margin-bottom: 0rem;
+    margin: 0rem 2.2rem;
+    text-align: center;
     transition: color 300ms;
+}
+
+.pr-container .pr-item a svg {
+    height: 1.5rem;
+    width: 1.5rem;
 }
 
 .pr-container .pr-item a:hover {
     color: #63d4cf;
+    text-decoration: underline;
 }
 
-.pr-container .pr-item a span {
-    font-size: 2.5rem;
+
+.pr-container .pr-item p {
+    margin: 0.5rem 2rem 2rem 2rem;
+    text-align: center;
+    font-size: 1.2rem;
 }
+
 
 @media (max-width: 767px) {
     .pr-container {
@@ -56,6 +70,11 @@ h1 {
     .pr-container .pr-item img {
         height: 12rem;
         width: 20rem;
+    }
+
+    .pr-container .pr-item p {
+        margin: 0.5rem 2rem 2rem 2rem;
+        font-size: 1.1rem;
     }
 }
 

@@ -2,8 +2,10 @@
 Personal Webpage
 
 ## Todos
-- [ ] linking.
+- [ ] About page
+- [x] linking.
     - [x] Social
-    - [ ] Projects
+    - [x] Projects
 - [ ] Styling
     - [x] Style the things which linked
+    - [ ] light/dark mode
