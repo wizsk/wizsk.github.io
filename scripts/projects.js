@@ -16,7 +16,7 @@ const projects = [
         "desc": "It'a a timer+clock site like `fliqo` for studying or screensaver."
     },
     {
-        "name": "TC",
+        "name": "GoShare",
         "img": "https://github.com/wizsk/goshare/raw/main/assets/ss/desktop-da.png",
         "repo": "https://github.com/wizsk/goshare",
         "desc": "it's a go backend for serving or uploading file locally"
