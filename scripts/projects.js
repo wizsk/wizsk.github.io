@@ -1,5 +1,6 @@
 const projects = [
     /*
+    * // templates
     {
         "name": "_",
         "img": "https://files.catbox.moe/o9ocaz.png",
@@ -13,6 +14,12 @@ const projects = [
         "img": "https://files.catbox.moe/fnzreb.png",
         "repo": "https://github.com/wizsk/tc",
         "desc": "It'a a timer+clock site like `fliqo` for studying or screensaver."
+    },
+    {
+        "name": "TC",
+        "img": "https://github.com/wizsk/goshare/raw/main/assets/ss/desktop-da.png",
+        "repo": "https://github.com/wizsk/goshare",
+        "desc": "it's a go backend for serving or uploading file locally"
     },
 ];
 
