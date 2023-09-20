@@ -8,18 +8,30 @@ const projects = [
         "desc": "_____"
     },
     */
-
-    {
-        "name": "TC",
-        "img": "https://files.catbox.moe/fnzreb.png",
-        "repo": "https://github.com/wizsk/tc",
-        "desc": "It'a a timer+clock site like `fliqo` for studying or screensaver."
-    },
     {
         "name": "GoShare",
         "img": "https://github.com/wizsk/goshare/raw/main/assets/ss/desktop-da.png",
         "repo": "https://github.com/wizsk/goshare",
-        "desc": "it's a go backend for serving or uploading file locally"
+        "desc": "A go backend for serving or uploading file locally"
+    },
+    {
+        "name": "FileUP",
+        "img": "/img/go-module.png",
+        "repo": "https://github.com/wizsk/fileup",
+        "desc": "A go module for receiving big files in chunk from the client with only http"
+    },
+
+    {
+        "name": "Dictionary",
+        "img": "https://raw.githubusercontent.com/wizsk/svelte-dictionary/main/static/screenshot.png",
+        "repo": "https://github.com/wizsk/svelte-dictionary",
+        "desc": "A Dictionary web app made with svelte and api"
+    },
+    {
+        "name": "TC",
+        "img": "https://github.com/wizsk/tc/raw/main/main_page_screenshot.png",
+        "repo": "https://github.com/wizsk/tc",
+        "desc": "A timer+clock site like 'fliqo' for studying or screensaver."
     },
 ];
 
@@ -28,11 +40,11 @@ const arrow = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fi
 const links = document.getElementById("links");
 let linksHtml = ""
 projects.forEach((p) => {
-    linksHtml += `<div class="pr-item">
-                    <a target="_blank" href="${p.repo}"><img atl="${p.name} image" src="${p.img}"/> </a>
-                    <a target="_blank" href="${p.repo}">${p.name}</a>
+    linksHtml += `<a class="pr-item" href="${p.repo}">
+                    <img atl="${p.name} image" src="${p.img}"/>
+                    <div>${p.name}</div>
                     <p>${p.desc}</p>
-                  </div>`;
+                  </a>`;
 });
 
 links.innerHTML = linksHtml;

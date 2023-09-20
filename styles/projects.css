@@ -31,7 +31,7 @@ h1 {
 
 
 
-.pr-container .pr-item a {
+.pr-container .pr-item  {
     text-align: center;
     font-size: 1.2rem;
     text-decoration: none;
@@ -42,14 +42,14 @@ h1 {
     transition: color 300ms;
 }
 
-.pr-container .pr-item a svg {
+.pr-container .pr-item svg {
     height: 1.5rem;
     width: 1.5rem;
 }
 
-.pr-container .pr-item a:hover {
+.pr-container .pr-item:hover {
     color: #63d4cf;
-    text-decoration: underline;
+   /* text-decoration: underline; */
 }
 
 
