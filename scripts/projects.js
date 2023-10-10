@@ -15,6 +15,12 @@ const projects = [
         "desc": "A go backend for serving or uploading file locally"
     },
     {
+        "name": "brn",
+        "img": "https://raw.githubusercontent.com/wizsk/brn/main/imgs/demo.gif",
+        "repo": "https://github.com/wizsk/brn",
+        "desc": "Bulk rename files in a sweep with your favourite text editor"
+    },
+    {
         "name": "FileUP",
         "img": "/img/go-module.png",
         "repo": "https://github.com/wizsk/fileup",
