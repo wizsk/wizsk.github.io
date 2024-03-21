@@ -9,10 +9,16 @@ const projects = [
     },
     */
     {
-        "name": "GoShare",
-        "img": "https://github.com/wizsk/goshare/raw/main/assets/ss/desktop-da.png",
+        "name": "goshare",
+        "img": "https://github.com/wizsk/goshare/raw/main/demo/img/browse.jpg",
         "repo": "https://github.com/wizsk/goshare",
         "desc": "A go backend for serving or uploading file locally"
+    },
+    {
+        "name": "plock",
+        "img": "/img/projects/plock.jpg",
+        "repo": "https://github.com/wizsk/plock",
+        "desc": "cli pormodoro clock and more"
     },
     {
         "name": "brn",
