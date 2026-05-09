@@ -4,415 +4,872 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arabic Lexicons | Offline Flutter Dictionary</title>
-    <link rel="icon" type="image/gif" href="/img/cat-computer.gif">
+    <title>Arabic Lexicons — Eleven Classical Dictionaries, Zero Internet</title>
+    <meta name="description"
+        content="Offline access to 11 Arabic dictionaries including Hans Wehr, Lane Lexicon, Lisan al-Arab, and more. Free, open source, GPLv3.">
+    <link rel="icon" href="/img/cat-computer.gif" type="image/gif">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
     <style>
-        :root {
-            /* Light Mode Variables */
-            --bg-gradient: linear-gradient(135deg, #f0f4f8, #d9e2ec);
-            --card-bg: rgba(255, 255, 255, 0.6);
-            --card-border: rgba(255, 255, 255, 0.4);
-            --text-primary: #102a43;
-            --text-secondary: #486581;
-            --accent: #003e6b;
-            --btn-yt: #ff0000;
-            --btn-yt-hover: #cc0000;
-            --yt-glow-start: rgba(255, 0, 0, 0.4);
-            --yt-glow-end: rgba(255, 0, 0, 0);
-            --btn-primary: #102a43;
-            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                /* Dark Mode Variables */
-                --bg-gradient: linear-gradient(135deg, #0f172a, #1e1b4b, #000000);
-                --card-bg: rgba(255, 255, 255, 0.03);
-                --card-border: rgba(255, 255, 255, 0.08);
-                --text-primary: #f8fafc;
-                --text-secondary: #94a3b8;
-                --accent: #818cf8;
-                --btn-yt: #ff4d4d;
-                --btn-yt-hover: #ff1a1a;
-                --yt-glow-start: rgba(255, 77, 77, 0.8);
-                /* Stronger glow for dark mode */
-                --yt-glow-end: rgba(255, 77, 77, 0);
-                --btn-primary: #ffffff;
-                --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-            }
-
-            .btn img[src*="github.svg"] {
-                filter: invert(1);
-            }
-        }
-
-        * {
+        /* ──────────── RESET & BASE ──────────── */
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        :root {
+            --bg: #0b0d14;
+            --bg2: #0f1119;
+            --surface: #13161f;
+            --card: rgba(255, 255, 255, 0.042);
+            --card-hov: rgba(255, 255, 255, 0.075);
+            --border: rgba(255, 255, 255, 0.075);
+            --border-mid: rgba(255, 255, 255, 0.13);
+            --accent: #c89836;
+            --accent-lt: #dfb258;
+            --accent-a12: rgba(200, 152, 54, 0.12);
+            --accent-a22: rgba(200, 152, 54, 0.22);
+            --accent-a35: rgba(200, 152, 54, 0.35);
+            --text: #e9e4d6;
+            --text-m: #7c809a;
+            --text-s: #484c65;
+            --green: #4ade80;
+            --green-bg: rgba(74, 222, 128, 0.09);
+            --green-br: rgba(74, 222, 128, 0.28);
+            --r: 16px;
+            --r-sm: 10px;
+            --sh: 0 8px 32px rgba(0, 0, 0, 0.45);
+            --sh-lg: 0 24px 64px rgba(0, 0, 0, 0.55);
+            --fn-d: 'Cormorant Garamond', Georgia, serif;
+            --fn-b: 'DM Sans', system-ui, sans-serif;
+            --fn-a: 'Noto Naskh Arabic', 'Traditional Arabic', serif;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #f6f3ec;
+                --bg2: #ece8df;
+                --surface: #faf7f1;
+                --card: rgba(0, 0, 0, 0.038);
+                --card-hov: rgba(0, 0, 0, 0.068);
+                --border: rgba(0, 0, 0, 0.085);
+                --border-mid: rgba(0, 0, 0, 0.16);
+                --accent: #9e6c18;
+                --accent-lt: #bf8a2a;
+                --accent-a12: rgba(158, 108, 24, 0.1);
+                --accent-a22: rgba(158, 108, 24, 0.18);
+                --accent-a35: rgba(158, 108, 24, 0.32);
+                --text: #1a1b2e;
+                --text-m: #5e6280;
+                --text-s: #9ea0b5;
+                --green: #1a7a40;
+                --green-bg: rgba(26, 122, 64, 0.08);
+                --green-br: rgba(26, 122, 64, 0.25);
+                --sh: 0 8px 32px rgba(0, 0, 0, 0.1);
+                --sh-lg: 0 24px 64px rgba(0, 0, 0, 0.15);
+            }
         }
 
         html {
             scroll-behavior: smooth;
         }
 
-        /* Ensure sections don't hide behind the sticky navbar */
-        section {
-            scroll-margin-top: 100px;
-        }
-
         body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--fn-b);
+            font-weight: 400;
+            line-height: 1.7;
+            overflow-x: hidden;
         }
 
-        /* Glassmorphism utility */
-        .glass {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
+        /* Subtle star-tile background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 4L44.7 18.3L58 10.5L52.1 24.3L67 24.7L55.3 33.5L60 48L46.3 41.8L40 55L33.7 41.8L20 48L24.7 33.5L13 24.7L27.9 24.3L22 10.5L35.3 18.3Z' fill='%23ffffff' fill-opacity='0.018'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
         }
 
-        /* Navigation */
-        .navbar {
+        @media (prefers-color-scheme: light) {
+            body::before {
+                background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 4L44.7 18.3L58 10.5L52.1 24.3L67 24.7L55.3 33.5L60 48L46.3 41.8L40 55L33.7 41.8L20 48L24.7 33.5L13 24.7L27.9 24.3L22 10.5L35.3 18.3Z' fill='%23000000' fill-opacity='0.025'/%3E%3C/svg%3E");
+            }
+        }
+
+        /* ──────────── NAV ──────────── */
+        nav {
             position: sticky;
-            top: 1rem;
-            z-index: 100;
+            top: 0;
+            z-index: 200;
+            height: 62px;
             display: flex;
-            justify-content: center;
-            gap: 2rem;
-            padding: 1rem 2rem;
-            max-width: 600px;
-            margin: 0 auto 2rem auto;
-            border-radius: 50px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 max(20px, calc((100% - 1100px)/2 + 20px));
+            backdrop-filter: blur(22px) saturate(160%);
+            -webkit-backdrop-filter: blur(22px) saturate(160%);
+            background: rgba(11, 13, 20, 0.82);
+            border-bottom: 1px solid var(--border);
         }
 
-        .navbar a {
-            color: var(--text-primary);
+        @media (prefers-color-scheme: light) {
+            nav {
+                background: rgba(246, 243, 236, 0.88);
+            }
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             text-decoration: none;
+            color: var(--text);
+        }
+
+        .nav-brand img {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .nav-brand-name {
+            font-family: var(--fn-d);
+            font-size: 1.15rem;
             font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
+            letter-spacing: 0.015em;
         }
 
-        .navbar a:hover {
-            color: var(--accent);
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-        }
-
-        /* Hero Section */
-        header {
-            text-align: center;
-            padding: 2rem 0 2rem;
-        }
-
-        .app-icon {
-            width: 96px;
-            height: 96px;
-            border-radius: 22px;
-            margin-bottom: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.05em;
-        }
-
-        .subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .highlight-feature {
-            display: inline-block;
-            background: rgba(129, 140, 248, 0.1);
-            color: var(--accent);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            border: 1px solid var(--card-border);
-        }
-
-        /* Buttons */
-        .btn-group {
+        .nav-end {
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
+            align-items: center;
+            gap: 6px;
         }
 
+        .nav-link {
+            font-size: 0.84rem;
+            color: var(--text-m);
+            text-decoration: none;
+            padding: 5px 11px;
+            border-radius: 8px;
+            transition: color .18s, background .18s;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+            background: var(--card);
+        }
+
+        .nav-gh {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-mid);
+            background: var(--card);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.84rem;
+            font-weight: 500;
+            transition: background .18s, border-color .18s, transform .18s;
+        }
+
+        .nav-gh:hover {
+            background: var(--card-hov);
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .nav-gh img {
+            width: 15px;
+            height: 15px;
+            /* dark icon: invert on dark bg, normal on light */
+            filter: invert(1);
+        }
+
+        @media (prefers-color-scheme: light) {
+            .nav-gh img {
+                filter: none;
+            }
+        }
+
+        /* ──────────── CONTAINER ──────────── */
+        .c {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ──────────── HERO ──────────── */
+        .hero {
+            padding: 96px 0 80px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 13px;
+            border-radius: 100px;
+            background: var(--accent-a12);
+            border: 1px solid var(--accent-a35);
+            font-size: 0.76rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent-lt);
+            margin-bottom: 22px;
+        }
+
+        .hero-eyebrow .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .hero-title {
+            font-family: var(--fn-d);
+            font-size: clamp(2.8rem, 4.5vw, 4.4rem);
+            font-weight: 700;
+            line-height: 1.07;
+            letter-spacing: -0.025em;
+            margin-bottom: 14px;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--text-m);
+            line-height: 1.72;
+            max-width: 460px;
+            margin-bottom: 30px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 36px;
+        }
+
+        .tag {
+            padding: 4px 13px;
+            border-radius: 100px;
+            font-size: 0.77rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text-m);
+        }
+
+        .tag.g {
+            border-color: var(--green-br);
+            background: var(--green-bg);
+            color: var(--green);
+        }
+
+        .hero-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* ──────────── BUTTONS ──────────── */
         .btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: var(--r-sm);
+            font-family: var(--fn-b);
+            font-size: 0.88rem;
+            font-weight: 500;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            color: var(--text-primary);
-            backdrop-filter: blur(8px);
+            border: 1px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            transition:
+                transform .22s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow .22s ease,
+                background .18s,
+                border-color .18s,
+                opacity .18s;
         }
 
-        .btn:hover {
+        .btn:hover:not(.btn-dim) {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn:active {
+            transform: translateY(0);
         }
 
         .btn img {
-            width: 24px;
-            height: 24px;
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            flex-shrink: 0;
         }
 
-        .btn.pending {
+        .btn-gold {
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 4px 18px var(--accent-a35);
+        }
+
+        .btn-gold img {
+            filter: brightness(0) invert(1);
+        }
+
+        .btn-gold:hover {
+            background: var(--accent-lt);
+            box-shadow: 0 8px 28px var(--accent-a35);
+        }
+
+        .btn-ghost {
+            background: var(--card);
+            border-color: var(--border-mid);
+            color: var(--text);
+        }
+
+        .btn-ghost:hover {
+            background: var(--card-hov);
+            border-color: var(--accent);
+            box-shadow: 0 4px 16px var(--accent-a12);
+        }
+
+        .btn-dim {
+            background: var(--card);
+            border-color: var(--border);
+            color: var(--text-m);
             opacity: 0.6;
-            cursor: not-allowed;
+            cursor: default;
+            pointer-events: none;
         }
 
-        .btn.pending:hover {
-            transform: none;
-            box-shadow: none;
+        .soon {
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding: 2px 7px;
+            border-radius: 5px;
+            background: var(--accent-a22);
+            color: var(--accent);
         }
 
-        /* Layout for Sections */
+        /* ──────────── PHONE MOCKUP ──────────── */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .phone-wrap {
+            position: relative;
+            max-width: 218px;
+            width: 100%;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .phone-wrap img {
+            width: 100%;
+            border-radius: 32px;
+            border: 1px solid var(--border-mid);
+            display: block;
+            box-shadow: var(--sh-lg);
+        }
+
+        .phone-wrap .screen-dark {
+            display: block;
+        }
+
+        .phone-wrap .screen-light {
+            display: none;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .phone-wrap .screen-dark {
+                display: none;
+            }
+
+            .phone-wrap .screen-light {
+                display: block;
+            }
+        }
+
+        .phone-glow {
+            position: absolute;
+            inset: -30px;
+            background: radial-gradient(ellipse at center, var(--accent-a22) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(-0.8deg);
+            }
+
+            50% {
+                transform: translateY(-14px) rotate(0.8deg);
+            }
+        }
+
+        /* ──────────── SECTION SHARED ──────────── */
         section {
-            margin: 4rem 0;
-            padding: 2.5rem;
+            padding: 88px 0;
+            position: relative;
         }
 
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+        .s-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 11px;
+        }
+
+        .s-title {
+            font-family: var(--fn-d);
+            font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+            font-weight: 700;
+            line-height: 1.12;
+            margin-bottom: 14px;
+        }
+
+        .s-sub {
+            font-size: 0.98rem;
+            color: var(--text-m);
+            max-width: 520px;
+            line-height: 1.72;
+        }
+
+        .s-head {
             text-align: center;
+            margin-bottom: 56px;
         }
 
-        /* Video Section */
+        .s-head .s-sub {
+            margin: 0 auto;
+        }
+
+        .rule {
+            width: 44px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            border-radius: 2px;
+            margin: 14px 0;
+        }
+
+        .rule.cx {
+            margin: 14px auto;
+        }
+
+        /* ──────────── VIDEO SECTION ──────────── */
         #video {
-            text-align: center;
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
         }
 
-        .video-wrapper {
+        .video-card {
+            max-width: 820px;
+            margin: 0 auto;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid var(--border-mid);
+            box-shadow: var(--sh-lg);
+            background: var(--card);
+        }
+
+        .video-ratio {
             position: relative;
             padding-bottom: 56.25%;
-            /* 16:9 */
             height: 0;
-            border-radius: 12px;
             overflow: hidden;
-            margin-bottom: 2rem;
-            border: 1px solid var(--card-border);
-            box-shadow: var(--shadow);
         }
 
-        .video-wrapper iframe {
+        .video-ratio iframe {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
-            border: 0;
+            border: none;
         }
 
+        .video-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 22px;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .video-meta {
+            font-size: 0.86rem;
+            color: var(--text-m);
+        }
+
+        .video-meta strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Big, unmissable YouTube button */
         .btn-yt {
-            display: inline-block;
-            background: var(--btn-yt);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 13px 26px;
+            border-radius: var(--r-sm);
+            background: #ff0000;
+            color: #fff;
+            font-family: var(--fn-b);
+            font-size: 0.92rem;
+            font-weight: 700;
             text-decoration: none;
-            font-weight: bold;
-            animation: pulse 2s infinite;
-            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.38);
+            transition: transform .22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .22s, background .18s;
+            letter-spacing: 0.01em;
         }
 
         .btn-yt:hover {
-            background: var(--btn-yt-hover);
-            color: white;
-            animation: none;
-            transform: scale(1.05);
-            box-shadow: 0 0 20px var(--yt-glow-start);
+            background: #d90000;
+            transform: translateY(-2px) scale(1.025);
+            box-shadow: 0 8px 30px rgba(255, 0, 0, 0.48);
         }
 
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 var(--yt-glow-start);
-            }
-
-            70% {
-                box-shadow: 0 0 0 20px var(--yt-glow-end);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 var(--yt-glow-end);
-            }
+        .btn-yt svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+            flex-shrink: 0;
         }
 
-        /* Features Section */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .feature-card {
-            padding: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-card h3 {
-            margin-bottom: 0.5rem;
-            color: var(--accent);
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* Lexicons Section */
-        .lexicon-category {
-            margin-bottom: 3rem;
-        }
-
-        .lexicon-category h3 {
-            margin-bottom: 1.5rem;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--card-border);
-            padding-bottom: 0.5rem;
-            font-size: 1.25rem;
-        }
-
-        .lexicons-grid {
+        /* ──────────── FEATURES ──────────── */
+        .feat-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            gap: 18px;
         }
 
-        .lexicon-item {
-            padding: 1.5rem;
+        .feat-card {
+            padding: 26px;
+            border-radius: var(--r);
+            background: var(--card);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: background .2s, border-color .22s, transform .22s;
+        }
+
+        .feat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle at top right, var(--accent-a12), transparent);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+
+        .feat-card:hover {
+            background: var(--card-hov);
+            border-color: var(--border-mid);
+            transform: translateY(-3px);
+        }
+
+        .feat-card:hover::after {
+            opacity: 1;
+        }
+
+        .feat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            background: var(--accent-a12);
+            border: 1px solid var(--accent-a22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .feat-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.9;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .feat-card h3 {
+            font-family: var(--fn-d);
+            font-size: 1.22rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 7px;
+        }
+
+        .feat-card p {
+            font-size: 0.88rem;
+            color: var(--text-m);
+            line-height: 1.65;
+        }
+
+        /* ──────────── LEXICONS ──────────── */
+        #lexicons {
+            background: var(--bg2);
+            border-top: 1px solid var(--border);
+        }
+
+        .lex-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 36px;
+        }
+
+        .lex-group-head {
+            font-size: 0.73rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-s);
+            padding-bottom: 11px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .lex-list {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
-            transition: transform 0.2s ease;
+            gap: 10px;
         }
 
-        @media (max-width: 480px) {
-            .lexicon-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .lexicon-header .ar {
-                align-self: flex-end;
-                /* Keeps Arabic on the right side */
-                font-size: 1.2rem;
-            }
-
-            .lexicon-item {
-                padding: 1rem;
-            }
-        }
-
-        .lexicon-item:hover {
-            transform: scale(1.02);
-        }
-
-        .lexicon-header {
+        .lex-card {
             display: flex;
-            justify-content: space-between;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 15px 17px;
+            border-radius: var(--r-sm);
+            background: var(--card);
+            border: 1px solid var(--border);
+            transition: background .2s, border-color .2s, transform .2s;
+        }
+
+        .lex-card:hover {
+            background: var(--card-hov);
+            border-color: var(--border-mid);
+            transform: translateX(5px);
+        }
+
+        .lex-n {
+            width: 26px;
+            height: 26px;
+            flex-shrink: 0;
+            border-radius: 7px;
+            background: var(--accent-a12);
+            border: 1px solid var(--accent-a22);
+            display: flex;
             align-items: center;
-            border-bottom: 1px dashed var(--card-border);
-            padding-bottom: 0.5rem;
-        }
-
-        .lexicon-header span.en {
+            justify-content: center;
+            font-size: 0.72rem;
             font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .lexicon-header span.ar {
-            font-family: "Traditional Arabic", "Scheherazade", serif;
-            font-size: 1.4rem;
             color: var(--accent);
-            font-weight: bold;
+            margin-top: 1px;
         }
 
-        .lexicon-desc {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
+        .lex-body {
+            flex: 1;
+            min-width: 0;
         }
 
+        .lex-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 3px;
+        }
+
+        .lex-en {
+            font-weight: 500;
+            font-size: 0.92rem;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .lex-ar {
+            font-family: var(--fn-a);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--accent);
+            direction: rtl;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .lex-desc {
+            font-size: 0.81rem;
+            color: var(--text-m);
+            line-height: 1.45;
+        }
+
+        /* ──────────── FOOTER ──────────── */
         footer {
+            padding: 36px 0;
+            border-top: 1px solid var(--border);
             text-align: center;
-            padding: 3rem 1rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--card-border);
-            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Responsive tweaks */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.2rem;
+        footer p {
+            font-size: 0.83rem;
+            color: var(--text-m);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ──────────── REVEAL ──────────── */
+        .rv {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+        .rv.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rv1 {
+            transition-delay: .1s;
+        }
+
+        .rv2 {
+            transition-delay: .2s;
+        }
+
+        .rv3 {
+            transition-delay: .3s;
+        }
+
+        .rv4 {
+            transition-delay: .4s;
+        }
+
+        /* ──────────── RESPONSIVE ──────────── */
+        @media (max-width: 800px) {
+            .hero {
+                padding: 60px 0 48px;
             }
 
-            .container {
-                padding: 1rem;
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 44px;
+                text-align: center;
             }
 
-            section {
-                padding: 1.5rem;
-                margin: 2rem 0;
+            .hero-visual {
+                order: -1;
             }
 
-            .navbar {
-                gap: 1rem;
-                padding: 0.75rem 1rem;
+            .phone-wrap {
+                max-width: 210px;
             }
 
-            .navbar a {
-                font-size: 0.85rem;
+            .tags {
+                justify-content: center;
             }
 
-            .lexicon-header {
+            .hero-btns {
+                justify-content: center;
+            }
+
+            .hero-sub {
+                margin: 0 auto 30px;
+            }
+
+            .lex-cols {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .nav-link:not(.nav-gh) {
+                display: none;
+            }
+
+            .video-foot {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.25rem;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .feat-grid {
+                grid-template-columns: 1fr;
             }
 
-            .lexicon-header span.ar {
-                align-self: flex-end;
+            .btn {
+                padding: 11px 16px;
+                font-size: 0.84rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -420,208 +877,410 @@
 
 <body>
 
-    <div class="container">
-        <nav class="navbar glass">
-            <a href="#video">Demo</a>
-            <a href="#features">Features</a>
-            <a href="#lexicons">Dictionaries</a>
-        </nav>
-
-        <header>
-            <img src="/assets/icon.png" alt="Arabic Lexicons App Icon" class="app-icon"
-                onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiI+PHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiBmaWxsPSIjMzMzIi8+PC9zdmc+'">
-            <h1>Arabic Lexicons</h1>
-            <p class="subtitle">
-                11 massive lexicons, <b>Zero Ads</b>, and completely <b>Offline</b>.
-                Includes a tap-to-define <b>Reader Mode</b> so you can actually enjoy
-                reading.
-            </p>
-            <!-- <p class="subtitle">
-                11 lexicons, <b>Zero Ads</b>, and 100% offline.
-                Built with a tap-to-define <b>Reader Mode</b> to save your time,
-                and an offline database to save your spine, because Lisan al-Arab
-                is too heavy and your Wi-Fi is too flaky.
-            </p> -->
-            <!-- <div class="highlight-feature">✨ Tap-to-translate Reader Mode</div> -->
-
-            <div class="btn-group">
-                <a href="#" class="btn">
-                    <img src="/assets/github.svg" alt="GitHub" onerror="this.style.display='none'">
-                    GitHub (Source)
-                </a>
-                <a href="#" class="btn pending" onclick="return false;"
-                    title="Google is currently analyzing our code...">
-                    <img src="/assets/playstore.png" alt="Play Store" onerror="this.style.display='none'">
-                    Play Store (Pending)
-                </a>
-                <a href="#" class="btn pending" onclick="return false;" title="Waiting on the merge request...">
-                    <img src="/assets/fdroid.svg" alt="F-Droid" onerror="this.style.display='none'">
-                    F-Droid (Pending)
-                </a>
-            </div>
-        </header>
-
-        <section id="video" class="glass">
-            <h2>See it in action</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Check out this walkthrough video showing
-                exactly how to use the app and how it works.</p>
-
-            <!-- <div class="video-wrapper">
-                <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="App Demo"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
-            </div> -->
-
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn-yt">
-                Open on YouTube
+    <!-- ════════════════════ NAV ════════════════════ -->
+    <nav>
+        <a class="nav-brand" href="#">
+            <img src="/assets/icon.png" alt="Arabic Lexicons app icon">
+            <span class="nav-brand-name">Arabic Lexicons</span>
+        </a>
+        <div class="nav-end">
+            <a class="nav-link" href="#video">Walkthrough</a>
+            <a class="nav-link" href="#features">Features</a>
+            <a class="nav-link" href="#lexicons">Dictionaries</a>
+            <a class="nav-gh" href="https://github.com/wizsk/arabic_lexicons" target="_blank" rel="noopener">
+                <img src="/assets/github.svg" alt="">
+                GitHub
             </a>
-        </section>
+        </div>
+    </nav>
 
-        <section id="features" class="glass">
-            <h2>Features</h2>
-            <div class="features-grid">
-                <div class="feature-card glass">
-                    <h3>Truly Offline</h3>
-                    <p>No sneaky API calls. No "checking for updates" in the background. It doesn't even ask for
-                        internet permissions.</p>
-                </div>
-                <div class="feature-card glass">
-                    <h3>Reader Mode</h3>
-                    <p>Just tap a word to get its meaning instantly. Copy-pasting text into a search bar is so 2010s.
+
+    <!-- ════════════════════ HERO ════════════════════ -->
+    <section class="hero">
+        <div class="c">
+            <div class="hero-grid">
+
+                <div class="hero-content">
+                    <div class="hero-eyebrow"><span class="dot"></span>Open Source · GPLv3</div>
+
+                    <h1 class="hero-title">
+                        Eleven Arabic<br>
+                        Lexicons<br>
+                    </h1>
+
+                    <p class="hero-sub">
+                        <b>Zero Ads</b>, and completely <b>Offline</b>.
+                        Includes a tap-to-define <b>Reader Mode</b> so you can actually enjoy
+                        reading.
                     </p>
+
+                    <div class="tags">
+                        <span class="tag g">Fully Offline</span>
+                        <span class="tag">Reader Mode</span>
+                        <span class="tag">11 Dictionaries</span>
+                        <span class="tag">Free Forever</span>
+                        <span class="tag">No Tracking</span>
+                    </div>
+
+                    <div class="hero-btns">
+                        <a href="https://github.com/wizsk/arabic_lexicons" class="btn btn-gold" target="_blank"
+                            rel="noopener">
+                            <img src="/assets/github.svg" alt="">
+                            View on GitHub
+                        </a>
+                        <span class="btn btn-dim">
+                            <img src="/assets/playstore.png" alt="Play Store">
+                            Play Store
+                            <span class="soon">SOON</span>
+                        </span>
+                        <span class="btn btn-dim">
+                            <img src="/assets/fdroid.svg" alt="F-Droid">
+                            F-Droid
+                            <span class="soon">SOON</span>
+                        </span>
+                    </div>
                 </div>
-                <div class="feature-card glass">
-                    <h3>Multi-word Search</h3>
-                    <p>Search entire phrases or roots. Smart suggestions kick in to help you find exactly what you're
-                        looking for.</p>
+
+                <div class="hero-visual">
+                    <div class="phone-wrap">
+                        <div class="phone-glow"></div>
+                        <img class="screen-dark" src="/assets/app-main-mobile-screen.png"
+                            alt="Arabic Lexicons app screenshot">
+                        <img class="screen-light" src="/assets/app-main-mobile-screen-light.png"
+                            alt="Arabic Lexicons app screenshot">
+                    </div>
                 </div>
-                <div class="feature-card glass">
-                    <h3>Featherweight</h3>
-                    <p>All 11 dictionaries are compressed into a beautifully optimized ~50MB database. Your storage
-                        space is safe with us.</p>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ════════════════════ VIDEO ════════════════════ -->
+    <section id="video">
+        <div class="c">
+
+            <div class="s-head rv">
+                <span class="s-label">See it in action</span>
+                <h2 class="s-title">_ minutes. That's all it takes.</h2>
+                <div class="rule cx"></div>
+                <p class="s-sub">Watch the app before committing your precious 50 MB. Reader mode, search, bookmarks —
+                    all in one run.</p>
+            </div>
+
+            <div class="video-card rv rv1">
+                <div class="video-ratio">
+                    <!--
+          Replace YOUR_VIDEO_ID with the actual YouTube video ID.
+          Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
+        -->
+                    <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1&color=white"
+                        title="Arabic Lexicons — App Walkthrough"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="video-foot">
+                    <div class="video-meta">
+                        <strong>Arabic Lexicons</strong> — Full feature walkthrough
+                    </div>
+
+                    <!-- Big, easy-to-catch YouTube button -->
+                    <a href="https://youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener" class="btn-yt">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path
+                                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                        </svg>
+                        Watch on YouTube
+                    </a>
                 </div>
             </div>
-        </section>
 
-        <section id="lexicons" class="glass">
-            <h2>Included Lexicons</h2>
+        </div>
+    </section>
 
-            <div class="lexicon-category">
-                <h3>English-Arabic Dictionaries</h3>
-                <div class="lexicons-grid">
-                    <div class="lexicon-item glass">
-                        <div class="lexicon-header">
-                            <span class="en">Aratools Arabic–English</span>
-                            <span class="ar">مباشر</span>
-                        </div>
-                        <p class="lexicon-desc">GPL-licensed components of the Aratools Arabic-English dictionary. Based
-                            on Tim Buckwalter’s Aramorph Arabic morphological analyzer.</p>
-                    </div>
 
-                    <div class="lexicon-item glass">
-                        <div class="lexicon-header">
-                            <span class="en">Hans Wehr Dictionary</span>
-                            <span class="ar">معجم هانز فير</span>
-                        </div>
-                        <p class="lexicon-desc">Modern Arabic–English dictionary compiled by Hans Wehr. Widely used
-                            academic reference organized by triliteral roots.</p>
-                    </div>
+    <!-- ════════════════════ FEATURES ════════════════════ -->
+    <section id="features">
+        <div class="c">
 
-                    <div class="lexicon-item glass">
-                        <div class="lexicon-header">
-                            <span class="en">Lane’s Lexicon</span>
-                            <span class="ar">قاموس لين</span>
-                        </div>
-                        <p class="lexicon-desc">Comprehensive 19th-century Arabic-English lexicon by Edward William
-                            Lane, based on major classical sources.</p>
-                    </div>
-                </div>
+            <div class="s-head rv">
+                <span class="s-label">What it does</span>
+                <h2 class="s-title">Built for people who read Arabic seriously</h2>
+                <div class="rule cx"></div>
+                <p class="s-sub">No flash, no filler. Just the features that actually help when you're deep in a
+                    classical text at 2 AM.</p>
             </div>
 
-            <div class="lexicon-category">
-                <h3>Arabic Dictionaries</h3>
-                <div class="lexicons-grid">
-                    <div class="lexicon-item glass">
-                        <div class="lexicon-header">
-                            <span class="en">Al-Muʿjam al-Ghani</span>
-                            <span class="ar">المعجم الغني</span>
-                        </div>
-                        <p class="lexicon-desc">Contemporary Arabic dictionary focusing on modern vocabulary and usage.
-                        </p>
-                    </div>
+            <div class="feat-grid">
 
-                    <div class="lexicon-item glass">
-                        <div class="lexicon-header">
-                            <span class="en">Al-Sihah (al-Jawhari)</span>
-                            <span class="ar">الصحاح في اللغة</span>
-                        </div>
-                        <p class="lexicon-desc">Classical Arabic dictionary by al-Jawhari (4th century AH), one of the
-                            foundational root-based lexicons.</p>
+                <div class="feat-card rv">
+                    <div class="feat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
                     </div>
+                    <h3>Multi-Word Search</h3>
+                    <p>Search full phrases, not just roots. Compound expressions, idiomatic usages — the search actually
+                        understands what you're looking for.</p>
+                </div>
 
-                    <div class="lexicon-item glass">
-                        <div class="lexicon-header">
-                            <span class="en">Lisan al-Arab</span>
-                            <span class="ar">لسان العرب</span>
-                        </div>
-                        <p class="lexicon-desc">Major classical Arabic lexicon compiled by Ibn Manzur (7th century AH),
-                            drawing from earlier authoritative sources.</p>
+                <div class="feat-card rv rv1">
+                    <div class="feat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                        </svg>
                     </div>
+                    <h3>Reader Mode</h3>
+                    <p>Paste any Arabic text. Tap any word. The dictionary entry appears instantly. No app-switching, no
+                        copy-pasting into a browser.</p>
+                </div>
 
-                    <div class="lexicon-item glass">
-                        <div class="lexicon-header">
-                            <span class="en">Al-Muʿjam al-Muʿasirah</span>
-                            <span class="ar">المعجم المعاصر</span>
-                        </div>
-                        <p class="lexicon-desc">Modern Arabic dictionary emphasizing contemporary terminology and usage.
-                        </p>
+                <div class="feat-card rv rv2">
+                    <div class="feat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                        </svg>
                     </div>
+                    <h3>Bookmarks</h3>
+                    <p>Save any entry with one tap. Your personal vocabulary list lives across all eleven lexicons,
+                        organized and searchable.</p>
+                </div>
 
-                    <div class="lexicon-item glass">
-                        <div class="lexicon-header">
-                            <span class="en">Al-Muʿjam al-Wasit</span>
-                            <span class="ar">المعجم الوسيط</span>
-                        </div>
-                        <p class="lexicon-desc">Standard modern Arabic dictionary published by the Arabic Language
-                            Academy in Cairo.</p>
+                <div class="feat-card rv rv3">
+                    <div class="feat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg>
                     </div>
+                    <h3>Smart Suggestions</h3>
+                    <p>Autocomplete that actually helps — finds roots and alternate forms even when your input is
+                        slightly off. Useful for beginners, honest about how Arabic works.</p>
+                </div>
 
-                    <div class="lexicon-item glass">
-                        <div class="lexicon-header">
-                            <span class="en">Al-Qamus al-Muhit</span>
-                            <span class="ar">القاموس المحيط</span>
-                        </div>
-                        <p class="lexicon-desc">Influential classical dictionary by al-Firuzabadi (8th century AH),
-                            widely cited in later lexicons.</p>
+                <div class="feat-card rv rv4">
+                    <div class="feat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z" />
+                            <line x1="8" y1="2" x2="8" y2="18" />
+                            <line x1="16" y1="6" x2="16" y2="22" />
+                        </svg>
                     </div>
+                    <h3>Fully Offline</h3>
+                    <p>The app literally cannot connect to the internet — no permission is declared. Everything is
+                        on-device. Works on a plane. Works in the desert. Works anywhere.</p>
+                </div>
 
-                    <div class="lexicon-item glass">
-                        <div class="lexicon-header">
-                            <span class="en">Maqayis al-Lugha</span>
-                            <span class="ar">مقاييس اللغة</span>
-                        </div>
-                        <p class="lexicon-desc">Root-based semantic analysis by Ibn Faris (4th century AH), reducing
-                            each root to its core conceptual meanings.</p>
+                <div class="feat-card rv">
+                    <div class="feat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                        </svg>
                     </div>
+                    <h3>~50 MB, Eleven Dictionaries</h3>
+                    <p>A compressed database fitting centuries of Arabic scholarship into about 50 megabytes. Your
+                        storage budget will survive. Your reading habit will flourish.</p>
+                </div>
 
-                    <div class="lexicon-item glass">
-                        <div class="lexicon-header">
-                            <span class="en">Mufradat Alfaz al-Qur’an</span>
-                            <span class="ar">مفردات ألفاظ القرآن</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ════════════════════ LEXICONS ════════════════════ -->
+    <section id="lexicons">
+        <div class="c">
+
+            <div class="s-head rv">
+                <span class="s-label">The collection</span>
+                <h2 class="s-title">Eleven lexicons in your pocket</h2>
+                <div class="rule cx"></div>
+                <p class="s-sub">From a 4th-century AH root analysis to the most-used modern Arabic-English dictionary.
+                    Curated, not random.</p>
+            </div>
+
+            <div class="lex-cols">
+
+                <!-- ── Left column: Arabic–English ── -->
+                <div class="rv">
+                    <div class="lex-group-head">Arabic – English Dictionaries</div>
+                    <div class="lex-list">
+
+                        <div class="lex-card">
+                            <div class="lex-n">1</div>
+                            <div class="lex-body">
+                                <div class="lex-row">
+                                    <span class="lex-en">Direct Dictionary</span>
+                                    <span class="lex-ar">مباشر</span>
+                                </div>
+                                <p class="lex-desc">Fast Arabic-to-English translation for quick lookups and everyday
+                                    vocabulary work.</p>
+                            </div>
                         </div>
-                        <p class="lexicon-desc">Qur’anic lexicon by al-Raghib al-Isfahani, analyzing vocabulary and
-                            semantic nuances of Qur’anic terms.</p>
+
+                        <div class="lex-card">
+                            <div class="lex-n">2</div>
+                            <div class="lex-body">
+                                <div class="lex-row">
+                                    <span class="lex-en">Hans Wehr</span>
+                                    <span class="lex-ar">هانز فير</span>
+                                </div>
+                                <p class="lex-desc">The most widely-used modern Arabic-English dictionary. If you've
+                                    studied Arabic, you've used this.</p>
+                            </div>
+                        </div>
+
+                        <div class="lex-card">
+                            <div class="lex-n">3</div>
+                            <div class="lex-body">
+                                <div class="lex-row">
+                                    <span class="lex-en">Lane's Lexicon</span>
+                                    <span class="lex-ar">معجم لين</span>
+                                </div>
+                                <p class="lex-desc">Edward Lane's monumental classical Arabic-English lexicon.
+                                    Extraordinarily detailed — by design.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <footer>
-            <p>Built with Flutter. Licensed under GPLv3.</p>
-            <p style="margin-top: 0.5rem; opacity: 0.7;">No developer's sleep schedule was respected during the making
-                of this app. Powered entirely by sheer willpower.</p>
-        </footer>
-    </div>
+                <!-- ── Right column: Arabic only ── -->
+                <div class="rv rv1">
+                    <div class="lex-group-head">Classical &amp; Modern Arabic</div>
+                    <div class="lex-list">
+
+                        <div class="lex-card">
+                            <div class="lex-n">4</div>
+                            <div class="lex-body">
+                                <div class="lex-row">
+                                    <span class="lex-en">Al-Ghani</span>
+                                    <span class="lex-ar">معجم الغني</span>
+                                </div>
+                                <p class="lex-desc">المعجم الغني — comprehensive modern Arabic dictionary with rich
+                                    examples and usage.</p>
+                            </div>
+                        </div>
+
+                        <div class="lex-card">
+                            <div class="lex-n">5</div>
+                            <div class="lex-body">
+                                <div class="lex-row">
+                                    <span class="lex-en">Mukhtar al-Sihah</span>
+                                    <span class="lex-ar">مختار الصحاح</span>
+                                </div>
+                                <p class="lex-desc">A concise classical Arabic dictionary — centuries old, still
+                                    routinely cited, compact and precise.</p>
+                            </div>
+                        </div>
+
+                        <div class="lex-card">
+                            <div class="lex-n">6</div>
+                            <div class="lex-body">
+                                <div class="lex-row">
+                                    <span class="lex-en">Lisan al-Arab</span>
+                                    <span class="lex-ar">لسان العرب</span>
+                                </div>
+                                <p class="lex-desc">Ibn Manzur's magnum opus — the most comprehensive classical Arabic
+                                    dictionary ever compiled. It's enormous. In a good way.</p>
+                            </div>
+                        </div>
+
+                        <div class="lex-card">
+                            <div class="lex-n">7</div>
+                            <div class="lex-body">
+                                <div class="lex-row">
+                                    <span class="lex-en">Al-Muashirah</span>
+                                    <span class="lex-ar">معجم اللغة العربية المعاصرة</span>
+                                </div>
+                                <p class="lex-desc">Contemporary Arabic dictionary capturing modern usage alongside
+                                    classical roots.</p>
+                            </div>
+                        </div>
+
+                        <div class="lex-card">
+                            <div class="lex-n">8</div>
+                            <div class="lex-body">
+                                <div class="lex-row">
+                                    <span class="lex-en">Al-Waseet</span>
+                                    <span class="lex-ar">المعجم الوسيط</span>
+                                </div>
+                                <p class="lex-desc">The Arabic Language Academy's reliable mid-size reference. The
+                                    sensible default for most lookups.</p>
+                            </div>
+                        </div>
+
+                        <div class="lex-card">
+                            <div class="lex-n">9</div>
+                            <div class="lex-body">
+                                <div class="lex-row">
+                                    <span class="lex-en">Al-Muhit</span>
+                                    <span class="lex-ar">القاموس المحيط</span>
+                                </div>
+                                <p class="lex-desc">Al-Firuzabadi's القاموس المحيط — so foundational that the Arabic
+                                    word for "dictionary" came from its title.</p>
+                            </div>
+                        </div>
+
+                        <div class="lex-card">
+                            <div class="lex-n">10</div>
+                            <div class="lex-body">
+                                <div class="lex-row">
+                                    <span class="lex-en">Maqayis al-Lugha</span>
+                                    <span class="lex-ar">مقاييس اللغة</span>
+                                </div>
+                                <p class="lex-desc">Ibn Faris's root-based semantic analysis (4th century AH) — traces
+                                    every word to its core trilateral meaning. A linguist's joy.</p>
+                            </div>
+                        </div>
+
+                        <div class="lex-card">
+                            <div class="lex-n">11</div>
+                            <div class="lex-body">
+                                <div class="lex-row">
+                                    <span class="lex-en">Mufradat al-Qur'an</span>
+                                    <span class="lex-ar">مفردات ألفاظ القرآن</span>
+                                </div>
+                                <p class="lex-desc">Al-Raghib al-Isfahani's Qur'anic lexicon — nuanced explanations of
+                                    Qur'anic vocabulary that no other dictionary quite matches.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ════════════════════ FOOTER ════════════════════ -->
+    <footer>
+        <div class="c">
+            <p>Arabic Lexicons — open source under <a href="https://github.com/wizsk/arabic_lexicons/blob/main/LICENSE"
+                    target="_blank" rel="noopener">GPLv3</a>. No ads, no tracking, no nonsense.</p>
+            <p style="margin-top:8px;">
+                <a href="https://github.com/wizsk/arabic_lexicons" target="_blank" rel="noopener">GitHub</a>
+                &nbsp;·&nbsp; Built with Flutter &nbsp;·&nbsp; Contributions welcome
+            </p>
+        </div>
+    </footer>
+
+
+    <script>
+        // Scroll reveal
+        const obs = new IntersectionObserver(
+            entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+            { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+        );
+        document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+        // Hero content is visible immediately
+        document.querySelectorAll('.hero .rv').forEach(el => el.classList.add('in'));
+    </script>
 
 </body>
 
