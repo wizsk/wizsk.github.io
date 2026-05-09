@@ -733,6 +733,7 @@
             justify-content: space-between;
             gap: 10px;
             margin-bottom: 3px;
+            flex-wrap: wrap;
         }
 
         .lex-en {
@@ -845,7 +846,9 @@
 
             .lex-cols {
                 grid-template-columns: 1fr;
-                gap: 28px;
+                gap: 20px;
+                max-width: 480px;
+                margin: 0 auto;
             }
 
             .nav-link:not(.nav-gh) {
@@ -884,7 +887,7 @@
             <span class="nav-brand-name">Arabic Lexicons</span>
         </a>
         <div class="nav-end">
-            <a class="nav-link" href="#video">Walkthrough</a>
+            <a class="nav-link" href="#video">Demo</a>
             <a class="nav-link" href="#features">Features</a>
             <a class="nav-link" href="#lexicons">Dictionaries</a>
             <a class="nav-gh" href="https://github.com/wizsk/arabic_lexicons" target="_blank" rel="noopener">
@@ -901,22 +904,21 @@
             <div class="hero-grid">
 
                 <div class="hero-content">
-                    <div class="hero-eyebrow"><span class="dot"></span>Open Source · GPLv3</div>
+                    <div class="hero-eyebrow"><span class="dot"></span>Open Source · GPLv3 · Flutter</div>
 
                     <h1 class="hero-title">
                         Eleven Arabic<br>
-                        Lexicons<br>
+                        Lexicons
                     </h1>
 
                     <p class="hero-sub">
                         <b>Zero Ads</b>, and completely <b>Offline</b>.
-                        Includes a tap-to-define <b>Reader Mode</b> so you can actually enjoy
-                        reading.
+                        Includes a tap-to-define <b>Reader Mode</b> so you can actually enjoy reading.
                     </p>
 
                     <div class="tags">
                         <span class="tag g">Fully Offline</span>
-                        <span class="tag">Reader Mode</span>
+                        <span class="tag">~50 MB</span>
                         <span class="tag">11 Dictionaries</span>
                         <span class="tag">Free Forever</span>
                         <span class="tag">No Tracking</span>
@@ -962,7 +964,7 @@
 
             <div class="s-head rv">
                 <span class="s-label">See it in action</span>
-                <h2 class="s-title">_ minutes. That's all it takes.</h2>
+                <h2 class="s-title">Two minutes. That's all it takes.</h2>
                 <div class="rule cx"></div>
                 <p class="s-sub">Watch the app before committing your precious 50 MB. Reader mode, search, bookmarks —
                     all in one run.</p>
@@ -974,8 +976,9 @@
           Replace YOUR_VIDEO_ID with the actual YouTube video ID.
           Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ → use "dQw4w9WgXcQ"
         -->
-                    <iframe src="https://www.youtube-nocookie.com/embed/IDDDDD?rel=0&modestbranding=1&color=white"
-                        title="Arabic Lexicons — App Walkthrough"
+                    <iframe
+                        src="https://www.youtube-nocookie.com/embed/YOUR_VIDEO_ID?rel=0&modestbranding=1&color=white"
+                        title="Arabic Lexicons — App Demo"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen>
                     </iframe>
@@ -1007,10 +1010,9 @@
 
             <div class="s-head rv">
                 <span class="s-label">What it does</span>
-                <h2 class="s-title">Built for people who read Arabic seriously</h2>
+                <h2 class="s-title">What's in it</h2>
                 <div class="rule cx"></div>
-                <p class="s-sub">No flash, no filler. Just the features that actually help when you're deep in a
-                    classical text at 2 AM.</p>
+                <p class="s-sub">A few things worth knowing about before you download.</p>
             </div>
 
             <div class="feat-grid">
@@ -1023,8 +1025,8 @@
                         </svg>
                     </div>
                     <h3>Multi-Word Search</h3>
-                    <p>Search full phrases, not just roots. Compound expressions, idiomatic usages — the search actually
-                        understands what you're looking for.</p>
+                    <p>Search full phrases, not just single roots. Useful when you're looking up an expression or
+                        multi-word term.</p>
                 </div>
 
                 <div class="feat-card rv rv1">
@@ -1035,8 +1037,8 @@
                         </svg>
                     </div>
                     <h3>Reader Mode</h3>
-                    <p>Paste any Arabic text. Tap any word. The dictionary entry appears instantly. No app-switching, no
-                        copy-pasting into a browser.</p>
+                    <p>Paste any Arabic text and tap a word to see its dictionary entry. Good for reading without
+                        constant interruptions.</p>
                 </div>
 
                 <div class="feat-card rv rv2">
@@ -1046,8 +1048,7 @@
                         </svg>
                     </div>
                     <h3>Bookmarks</h3>
-                    <p>Save any entry with one tap. Your personal vocabulary list lives across all eleven lexicons,
-                        organized and searchable.</p>
+                    <p>Save entries for later. Bookmarks work across all dictionaries.</p>
                 </div>
 
                 <div class="feat-card rv rv3">
@@ -1057,8 +1058,7 @@
                         </svg>
                     </div>
                     <h3>Smart Suggestions</h3>
-                    <p>Autocomplete that actually helps — finds roots and alternate forms even when your input is
-                        slightly off. Useful for beginners, honest about how Arabic works.</p>
+                    <p>Shows suggestions as you type, including alternate forms and roots.</p>
                 </div>
 
                 <div class="feat-card rv rv4">
@@ -1070,8 +1070,7 @@
                         </svg>
                     </div>
                     <h3>Fully Offline</h3>
-                    <p>The app literally cannot connect to the internet — no permission is declared. Everything is
-                        on-device. Works on a plane. Works in the desert. Works anywhere.</p>
+                    <p>No internet permission. Everything is stored on-device. Works without a connection.</p>
                 </div>
 
                 <div class="feat-card rv">
@@ -1081,8 +1080,7 @@
                         </svg>
                     </div>
                     <h3>~50 MB, Eleven Dictionaries</h3>
-                    <p>A compressed database fitting centuries of Arabic scholarship into about 50 megabytes. Your
-                        storage budget will survive. Your reading habit will flourish.</p>
+                    <p>The full database is around 50 MB compressed. Eleven dictionaries, doesn't take much space.</p>
                 </div>
 
             </div>
@@ -1096,10 +1094,9 @@
 
             <div class="s-head rv">
                 <span class="s-label">The collection</span>
-                <h2 class="s-title">Eleven lexicons in your pocket</h2>
+                <h2 class="s-title">The dictionaries</h2>
                 <div class="rule cx"></div>
-                <p class="s-sub">From a 4th-century AH root analysis to the most-used modern Arabic-English dictionary.
-                    Curated, not random.</p>
+                <p class="s-sub">Eleven dictionaries — classical and modern, Arabic and English.</p>
             </div>
 
             <div class="lex-cols">
@@ -1116,8 +1113,7 @@
                                     <span class="lex-en">Direct Dictionary</span>
                                     <span class="lex-ar">مباشر</span>
                                 </div>
-                                <p class="lex-desc">Fast Arabic-to-English translation for quick lookups and everyday
-                                    vocabulary work.</p>
+                                <p class="lex-desc">Standard modern Arabic to English. Good for quick lookups.</p>
                             </div>
                         </div>
 
@@ -1128,8 +1124,7 @@
                                     <span class="lex-en">Hans Wehr</span>
                                     <span class="lex-ar">هانز فير</span>
                                 </div>
-                                <p class="lex-desc">The most widely-used modern Arabic-English dictionary. If you've
-                                    studied Arabic, you've used this.</p>
+                                <p class="lex-desc">The standard modern Arabic-English dictionary. Widely used.</p>
                             </div>
                         </div>
 
@@ -1140,8 +1135,7 @@
                                     <span class="lex-en">Lane's Lexicon</span>
                                     <span class="lex-ar">معجم لين</span>
                                 </div>
-                                <p class="lex-desc">Edward Lane's monumental classical Arabic-English lexicon.
-                                    Extraordinarily detailed — by design.</p>
+                                <p class="lex-desc">Edward Lane's classical Arabic-English lexicon. Very detailed.</p>
                             </div>
                         </div>
 
@@ -1160,8 +1154,7 @@
                                     <span class="lex-en">Al-Ghani</span>
                                     <span class="lex-ar">معجم الغني</span>
                                 </div>
-                                <p class="lex-desc">المعجم الغني — comprehensive modern Arabic dictionary with rich
-                                    examples and usage.</p>
+                                <p class="lex-desc">المعجم الغني — a thorough modern Arabic dictionary.</p>
                             </div>
                         </div>
 
@@ -1172,8 +1165,7 @@
                                     <span class="lex-en">Mukhtar al-Sihah</span>
                                     <span class="lex-ar">مختار الصحاح</span>
                                 </div>
-                                <p class="lex-desc">A concise classical Arabic dictionary — centuries old, still
-                                    routinely cited, compact and precise.</p>
+                                <p class="lex-desc">A concise classical Arabic dictionary, still widely referenced.</p>
                             </div>
                         </div>
 
@@ -1184,8 +1176,8 @@
                                     <span class="lex-en">Lisan al-Arab</span>
                                     <span class="lex-ar">لسان العرب</span>
                                 </div>
-                                <p class="lex-desc">Ibn Manzur's magnum opus — the most comprehensive classical Arabic
-                                    dictionary ever compiled. It's enormous. In a good way.</p>
+                                <p class="lex-desc">Ibn Manzur's large classical Arabic dictionary. One of the most
+                                    comprehensive.</p>
                             </div>
                         </div>
 
@@ -1196,8 +1188,7 @@
                                     <span class="lex-en">Al-Muashirah</span>
                                     <span class="lex-ar">معجم اللغة العربية المعاصرة</span>
                                 </div>
-                                <p class="lex-desc">Contemporary Arabic dictionary capturing modern usage alongside
-                                    classical roots.</p>
+                                <p class="lex-desc">A modern Arabic dictionary covering contemporary usage.</p>
                             </div>
                         </div>
 
@@ -1208,8 +1199,7 @@
                                     <span class="lex-en">Al-Waseet</span>
                                     <span class="lex-ar">المعجم الوسيط</span>
                                 </div>
-                                <p class="lex-desc">The Arabic Language Academy's reliable mid-size reference. The
-                                    sensible default for most lookups.</p>
+                                <p class="lex-desc">The Arabic Language Academy's mid-size reference dictionary.</p>
                             </div>
                         </div>
 
@@ -1220,8 +1210,8 @@
                                     <span class="lex-en">Al-Muhit</span>
                                     <span class="lex-ar">القاموس المحيط</span>
                                 </div>
-                                <p class="lex-desc">Al-Firuzabadi's القاموس المحيط — so foundational that the Arabic
-                                    word for "dictionary" came from its title.</p>
+                                <p class="lex-desc">Al-Firuzabadi's القاموس المحيط — a classical comprehensive
+                                    dictionary.</p>
                             </div>
                         </div>
 
@@ -1232,8 +1222,8 @@
                                     <span class="lex-en">Maqayis al-Lugha</span>
                                     <span class="lex-ar">مقاييس اللغة</span>
                                 </div>
-                                <p class="lex-desc">Ibn Faris's root-based semantic analysis (4th century AH) — traces
-                                    every word to its core trilateral meaning. A linguist's joy.</p>
+                                <p class="lex-desc">Ibn Faris's root-based lexicon (4th century AH). Traces words to
+                                    their core trilateral meaning.</p>
                             </div>
                         </div>
 
@@ -1244,8 +1234,8 @@
                                     <span class="lex-en">Mufradat al-Qur'an</span>
                                     <span class="lex-ar">مفردات ألفاظ القرآن</span>
                                 </div>
-                                <p class="lex-desc">Al-Raghib al-Isfahani's Qur'anic lexicon — nuanced explanations of
-                                    Qur'anic vocabulary that no other dictionary quite matches.</p>
+                                <p class="lex-desc">Al-Raghib al-Isfahani's lexicon explaining the vocabulary of the
+                                    Qur'an.</p>
                             </div>
                         </div>
 
@@ -1266,10 +1256,9 @@
                 <a href="https://github.com/wizsk/arabic_lexicons" target="_blank" rel="noopener">GitHub</a>
                 &nbsp;·&nbsp; Built with Flutter &nbsp;·&nbsp; Contributions welcome
             </p>
-            <p style="margin-top:20px; font-size:0.75rem; color:var(--text-s);">This page was generated with the help of
-                AI. (But the app wasn't)</p>
+            <p style="margin-top:20px; font-size:0.75rem; color:var(--text-s);">This page was generated by AI (But The
+                App wasn't)</p>
             </p>
-
         </div>
     </footer>
 
