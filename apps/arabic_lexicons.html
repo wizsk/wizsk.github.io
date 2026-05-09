@@ -324,6 +324,24 @@
             transition: transform 0.2s ease;
         }
 
+        @media (max-width: 480px) {
+            .lexicon-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .lexicon-header .ar {
+                align-self: flex-end;
+                /* Keeps Arabic on the right side */
+                font-size: 1.2rem;
+            }
+
+            .lexicon-item {
+                padding: 1rem;
+            }
+        }
+
         .lexicon-item:hover {
             transform: scale(1.02);
         }
@@ -413,10 +431,17 @@
             <img src="/assets/icon.png" alt="Arabic Lexicons App Icon" class="app-icon"
                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiI+PHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiBmaWxsPSIjMzMzIi8+PC9zdmc+'">
             <h1>Arabic Lexicons</h1>
-            <p class="subtitle">11 dictionaries squeezed into one App with built-in Reader.
-                Because carrying physical
-                lexicons is bad
-                for your back.</p>
+            <p class="subtitle">
+                11 massive lexicons, <b>Zero Ads</b>, and completely <b>Offline</b>.
+                Includes a tap-to-define <b>Reader Mode</b> so you can actually enjoy
+                reading.
+            </p>
+            <!-- <p class="subtitle">
+                11 lexicons, <b>Zero Ads</b>, and 100% offline.
+                Built with a tap-to-define <b>Reader Mode</b> to save your time,
+                and an offline database to save your spine, because Lisan al-Arab
+                is too heavy and your Wi-Fi is too flaky.
+            </p> -->
             <!-- <div class="highlight-feature">✨ Tap-to-translate Reader Mode</div> -->
 
             <div class="btn-group">
@@ -441,11 +466,11 @@
             <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Check out this walkthrough video showing
                 exactly how to use the app and how it works.</p>
 
-            <div class="video-wrapper">
+            <!-- <div class="video-wrapper">
                 <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="App Demo"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
-            </div>
+            </div> -->
 
             <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn-yt">
                 Open on YouTube
