@@ -4,13 +4,1048 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Recommendations</title>
+    <title>مكتبة — Arabic Reads</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --ink: #17110a;
+            --ink-2: #3b2c14;
+            --ink-3: #78603c;
+            --ink-4: #b09470;
+            --bg: #fdf8f0;
+            --bg-2: #f5ecda;
+            --bg-3: #ecdfc5;
+            --gold: #b07d18;
+            --gold-2: #ce9b2a;
+            --gold-3: #e8b84b;
+            --gold-pale: #f5e8c4;
+            --r: 3px;
+            --r-lg: 8px;
+            --sh: 3px 4px 0 rgba(23, 17, 10, .16), 6px 8px 20px rgba(23, 17, 10, .09);
+            --sh-h: 5px 7px 0 rgba(23, 17, 10, .2), 10px 14px 28px rgba(23, 17, 10, .13);
+            --fa: 'Noto Sans Arabic', sans-serif;
+            --fe: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--fe);
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased
+        }
+
+        .fe {
+            font-family: var(--fe);
+        }
+
+        .fa {
+            font-family: var(--fa);
+        }
+
+        /* ── HEADER ── */
+        .hdr {
+            background: var(--ink);
+            border-bottom: 2px solid var(--gold);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0 1.5rem
+        }
+
+        .hdr-in {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            height: 56px;
+            gap: 10px
+        }
+
+        .logo {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            text-decoration: none;
+            flex-shrink: 0
+        }
+
+        .logo-ar {
+            font-family: var(--fa);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold-3);
+            line-height: 1;
+            direction: rtl
+        }
+
+        .logo-en {
+            font-family: var(--fe);
+            font-size: 10px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, .65);
+            letter-spacing: 2.5px;
+            text-transform: uppercase
+        }
+
+        /* ── TABS ── */
+        .nav {
+            background: var(--bg-2);
+            border-bottom: 1px solid var(--bg-3);
+            position: sticky;
+            top: 56px;
+            z-index: 99
+        }
+
+        .nav-in {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            padding: 0 1.25rem;
+            overflow-x: auto;
+            scrollbar-width: none
+        }
+
+        .nav-in::-webkit-scrollbar {
+            display: none
+        }
+
+        .tb {
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            padding: 12px 18px 10px;
+            cursor: pointer;
+            color: var(--ink-3);
+            transition: color .15s;
+            white-space: nowrap;
+            text-align: center
+        }
+
+        .tb:hover {
+            color: var(--ink)
+        }
+
+        .tb.on {
+            color: var(--gold);
+            border-bottom-color: var(--gold)
+        }
+
+        .tb-ar {
+            font-family: var(--fa);
+            font-size: 15px;
+            font-weight: 600;
+            display: block;
+            line-height: 1.3;
+            direction: rtl
+        }
+
+        .tb-en {
+            font-family: var(--fe);
+            font-size: 12px;
+            font-weight: 500;
+            display: block;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            opacity: .6;
+            margin-top: 6px
+        }
+
+        /* ── PANELS ── */
+        .panel {
+            display: none
+        }
+
+        .panel.on {
+            display: block
+        }
+
+        /* ── MAIN ── */
+        .main {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 5rem
+        }
+
+        /* ── SECTION HEADER ── */
+        .sh {
+            margin-bottom: 2.25rem;
+            padding-bottom: 1.1rem;
+            border-bottom: 1px solid var(--bg-3)
+        }
+
+        .sh h1 {
+            font-family: var(--fe);
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--ink);
+            letter-spacing: -.2px
+        }
+
+        .sh p {
+            font-family: var(--fe);
+            font-size: 12.5px;
+            font-weight: 300;
+            color: var(--ink-3);
+            margin-top: 4px;
+            font-style: italic
+        }
+
+        /* ── GRID ── */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
+            gap: 2rem 1.5rem
+        }
+
+        @media(max-width:480px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem .9rem
+            }
+        }
+
+        /* ── CARD ── */
+        .card {
+            display: flex;
+            flex-direction: column;
+            transition: transform .2s ease
+        }
+
+        .card:hover {
+            transform: translateY(-4px)
+        }
+
+        /* cover */
+        .cov {
+            position: relative;
+            width: 100%;
+            padding-bottom: 142%;
+            margin-bottom: 13px;
+            border-radius: var(--r);
+            overflow: hidden;
+            box-shadow: var(--sh);
+            flex-shrink: 0;
+            transition: box-shadow .2s;
+            background: #1a1008
+        }
+
+        .card:hover .cov {
+            box-shadow: var(--sh-h)
+        }
+
+        .cov img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block
+        }
+
+        .cov::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: rgba(0, 0, 0, .2);
+            z-index: 1
+        }
+
+        .cab {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: .85rem .75rem;
+            gap: 7px
+        }
+
+        .cab svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .cab-t {
+            font-family: var(--fa);
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+            direction: rtl;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, .9);
+            position: relative;
+            z-index: 2
+        }
+
+        .cab-a {
+            font-family: var(--fa);
+            font-size: 10.5px;
+            font-weight: 400;
+            text-align: center;
+            direction: rtl;
+            color: rgba(255, 255, 255, .5);
+            position: relative;
+            z-index: 2
+        }
+
+        /* info */
+        .info {
+            flex: 1;
+            display: flex;
+            flex-direction: column
+        }
+
+        .t-ar {
+            font-family: var(--fa);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--ink);
+            direction: rtl;
+            text-align: right;
+            line-height: 1.45;
+            margin-bottom: 4px
+        }
+
+        .a-ar {
+            font-family: var(--fa);
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--gold);
+            direction: rtl;
+            text-align: right;
+            line-height: 1.4;
+            margin-bottom: 10px
+        }
+
+        .desc {
+            flex: 1;
+            margin-bottom: 11px
+        }
+
+        .d-ar {
+            font-family: var(--fa);
+            font-size: 13px;
+            font-weight: 400;
+            direction: rtl;
+            text-align: right;
+            display: block;
+            color: var(--ink-2);
+            line-height: 1.8;
+            margin-bottom: 6px
+        }
+
+        .d-en {
+            font-family: var(--fe);
+            font-size: 11.5px;
+            font-weight: 300;
+            display: block;
+            color: var(--ink-3);
+            line-height: 1.65
+        }
+
+        /* audio row */
+        .audio-row {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 10px;
+            direction: rtl
+        }
+
+        .audio-lbl {
+            font-family: var(--fa);
+            font-size: 11px;
+            color: var(--ink-4);
+            white-space: nowrap;
+            flex-shrink: 0
+        }
+
+        .audio-row a {
+            font-family: var(--fe);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--gold);
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+            min-width: 0;
+            text-align: right
+        }
+
+        .audio-row a:hover {
+            text-decoration: underline;
+            color: var(--gold-2)
+        }
+
+        .no-audio {
+            font-family: var(--fe);
+            font-size: 11px;
+            color: var(--ink-4);
+            font-style: italic;
+            margin-bottom: 10px;
+            text-align: right;
+            direction: rtl
+        }
+
+        /* buttons */
+        .btns {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: auto
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding: 8px 12px;
+            border: none;
+            border-radius: var(--r);
+            font-family: var(--fa);
+            font-size: 12.5px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background .15s, color .15s;
+            direction: rtl
+        }
+
+        .btn-main {
+            background: var(--ink);
+            color: var(--gold-3)
+        }
+
+        .btn-main:hover {
+            background: var(--gold);
+            color: var(--ink)
+        }
+
+        .btn-audio {
+            background: var(--bg-2);
+            color: var(--ink-2);
+            border: 1px solid var(--bg-3)
+        }
+
+        .btn-audio:hover {
+            background: var(--bg-3);
+            color: var(--ink)
+        }
+
+        .btn svg {
+            width: 12px;
+            height: 12px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0
+        }
+
+        /* ── WELCOME PAGE ── */
+        .welcome {
+            max-width: 700px;
+            margin: 0 auto
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2.5rem
+        }
+
+        .hero-ar {
+            font-family: var(--fa);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink);
+            direction: rtl;
+            line-height: 1.3;
+            margin-bottom: .5rem
+        }
+
+        .hero-en {
+            font-family: var(--fe);
+            font-size: 15px;
+            font-weight: 300;
+            color: var(--ink-3);
+            font-style: italic;
+            letter-spacing: .3px
+        }
+
+        .intro-block {
+            background: var(--bg-2);
+            border: 1px solid var(--bg-3);
+            border-radius: var(--r-lg);
+            padding: 1.75rem 1.75rem;
+            margin-bottom: 1.75rem
+        }
+
+        .intro-block p {
+            font-family: var(--fe);
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--ink-2);
+            margin-bottom: .9rem
+        }
+
+        .intro-block p:last-child {
+            margin-bottom: 0
+        }
+
+        .intro-block strong {
+            font-weight: 500;
+            color: var(--ink)
+        }
+
+        .levels {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: .75rem;
+            margin-bottom: 1.75rem
+        }
+
+        @media(max-width:400px) {
+            .levels {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .lvl {
+            background: var(--bg-2);
+            border: 1px solid var(--bg-3);
+            border-radius: var(--r-lg);
+            padding: 1rem 1.1rem;
+            cursor: pointer;
+            transition: border-color .15s, background .15s;
+            text-align: right;
+            direction: rtl
+        }
+
+        .lvl:hover {
+            border-color: var(--gold-2);
+            background: var(--gold-pale)
+        }
+
+        .lvl-ar {
+            font-family: var(--fa);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--ink);
+            display: block;
+            margin-bottom: 3px
+        }
+
+        .lvl-en {
+            font-family: var(--fe);
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--ink-3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            text-align: right
+        }
+
+        .lvl-desc {
+            font-family: var(--fe);
+            font-size: 12px;
+            font-weight: 300;
+            color: var(--ink-3);
+            margin-top: 5px;
+            line-height: 1.5;
+            text-align: right
+        }
+
+        /* app card */
+        .app-card {
+            border: 1px solid var(--bg-3);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            margin-bottom: 2rem
+        }
+
+        .app-card-top {
+            background: var(--ink-3);
+            padding: 1.5rem 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem
+        }
+
+        .app-icon {
+            width: 52px;
+            height: 52px;
+            /* border-radius: 12px; */
+            overflow: hidden;
+            flex-shrink: 0;
+            /* background: var(--bg-2) */
+        }
+
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            object-fit: cover;
+            display: block
+        }
+
+        .app-icon-fb {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0
+        }
+
+        .app-icon-fb svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--ink);
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        .app-name {
+            font-family: var(--fe);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gold-3);
+            /* direction: rtl; */
+            line-height: 1.2
+        }
+
+        .app-sub {
+            font-family: var(--fe);
+            font-size: 11px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .65);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 3px
+        }
+
+        .app-body {
+            background: var(--bg-2);
+            padding: 1.4rem 1.75rem
+        }
+
+        .app-body p {
+            font-family: var(--fe);
+            font-size: 13.5px;
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--ink-2);
+            margin-bottom: .75rem
+        }
+
+        .app-body p:last-child {
+            margin-bottom: 0
+        }
+
+        .feat-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            margin-bottom: .9rem
+        }
+
+        .feat-list li {
+            font-family: var(--fe);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--ink-2);
+            display: flex;
+            align-items: baseline;
+            gap: .5rem;
+            line-height: 1.55
+        }
+
+        .feat-list li::before {
+            content: '—';
+            color: var(--gold);
+            font-size: 12px;
+            flex-shrink: 0
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: .9rem;
+            margin: 2.5rem 0 2rem
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--bg-3)
+        }
+
+        .divider span {
+            font-family: var(--fe);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--ink-4);
+            white-space: nowrap
+        }
+
+        @media(max-width:640px) {
+            .main {
+                padding: 1.5rem 1rem 4rem
+            }
+
+            .hero-ar {
+                font-size: 28px
+            }
+
+            .tb {
+                padding: 10px 13px 8px
+            }
+
+            .t-ar {
+                font-size: 15px
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>It will be here soon insallah</h1>
+    <header class="hdr">
+        <div class="hdr-in">
+            <a href="#" class="logo" onclick="switchTab('welcome');return false">
+                <span class="logo-ar">مكتبة</span>
+                <span class="logo-en">Maktaba</span>
+            </a>
+        </div>
+    </header>
 
+    <nav class="nav">
+        <div class="nav-in">
+            <button class="tb" data-tab="welcome" onclick="switchTab('welcome')">
+                <span class="tb-ar">البداية</span>
+                <span class="tb-en">Welcome</span>
+            </button>
+            <button class="tb" data-tab="beginner" onclick="switchTab('beginner')">
+                <span class="tb-ar">مبتدئ</span>
+                <span class="tb-en">Beginner</span>
+            </button>
+            <button class="tb" data-tab="intermediate" onclick="switchTab('intermediate')">
+                <span class="tb-ar">متوسط</span>
+                <span class="tb-en">Intermediate</span>
+            </button>
+            <button class="tb" data-tab="advanced" onclick="switchTab('advanced')">
+                <span class="tb-ar">متقدم</span>
+                <span class="tb-en">Advanced</span>
+            </button>
+            <button class="tb" data-tab="poems" onclick="switchTab('poems')">
+                <span class="tb-ar">شعر</span>
+                <span class="tb-en">Poetry</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main">
+
+        <!-- WELCOME -->
+        <div id="panel-welcome" class="panel">
+            <div class="welcome">
+
+                <div class="hero">
+                    <div class="hero-ar">أهلاً بك في مكتبة</div>
+                    <div class="hero-en">Your guide to Arabic literature</div>
+                </div>
+
+                <div class="intro-block">
+                    <p>
+                        Here is a curated reading list for anyone who wants to explore Arabic literature.
+                    </p>
+                    <p>
+                        The books here are selected so that you can easily copy and paste the text into the
+                        <a style="color: var(--gold);" href="/apps/arabic_lexicons.html">Reader app page</a>.
+                        You can also listen to the audio while reading, as I have included audio links for most of the
+                        books.
+                        In the beginning, listening helps much more than you might think! Since Arabic is typically
+                        written
+                        without Harakat (vowels), listening is truly essential to get accustomed to it.
+                    </p>
+                    <p>
+                        While reading in the app, simply click on any word to instantly see its meaning. Whenever you
+                        look up a word,
+                        it will automatically be highlighted and saved to your "foreign words" list. This makes it
+                        incredibly easy
+                        to remember and recognize the word if you encounter it again later in the book! You can also
+                        manually
+                        bookmark words to reference them at any time.
+                    </p>
+                    <p>
+                        I hope this helps you!
+                    </p>
+                    <p>
+                        Tap any level below, or use the tabs above to browse.
+                    </p>
+
+                    <!-- 
+                    <p>
+                        Here is a curated reading list for anyone who wants to explore
+                        Arabic
+                        literature.
+                    </p>
+                    <p>
+                        The books here are selected sotaht wich has text that you can copy and paste in the
+                        <a style="color: var(--gold);" href="/apps/arabic_lexicons.html"> apps Reader page and also
+                            while
+                            reading listen to the audio.
+                            in the bugiging the audio helps much more than you might think, as arabic is without Harakat
+                            (voles) so it's really esential to get acustumed to it, and the best way is to listen and
+                            read.
+                            wwhle reading you can bookmark words to refference them later and if you don't bookmark them
+                            the
+                            word will be saved to forgein list sotat if u encunter it again in the same book you will
+                            remember.
+                    </p>
+                    <p>
+                        I hope this helps you.
+                    </p>
+                    <p>
+                        Tap any level below, or use the tabs above to browse.
+                    </p> -->
+                </div>
+
+                <div class="levels">
+                    <div class="lvl" onclick="switchTab('beginner')">
+                        <span class="lvl-ar">مبتدئ</span>
+                        <span class="lvl-en">Beginner</span>
+                        <div class="lvl-desc">Simple prose, folk tales, short stories</div>
+                    </div>
+                    <div class="lvl" onclick="switchTab('intermediate')">
+                        <span class="lvl-ar">متوسط</span>
+                        <span class="lvl-en">Intermediate</span>
+                        <div class="lvl-desc">Novels and plays with richer language</div>
+                    </div>
+                    <div class="lvl" onclick="switchTab('advanced')">
+                        <span class="lvl-ar">متقدم</span>
+                        <span class="lvl-en">Advanced</span>
+                        <div class="lvl-desc">Masterworks and classical texts</div>
+                    </div>
+                    <div class="lvl" onclick="switchTab('poems')">
+                        <span class="lvl-ar">شعر</span>
+                        <span class="lvl-en">Poetry</span>
+                        <div class="lvl-desc">Classical and modern Arabic verse</div>
+                    </div>
+                </div>
+
+                <div class="divider"><span>The Reader App</span></div>
+
+                <div class="app-card">
+                    <div class="app-card-top">
+                        <div class="app-icon" id="app-icon-wrap">
+                            <img src="/assets/icon.png" alt="Reader app icon" onerror="showFbIcon()">
+                        </div>
+                        <div>
+                            <div class="app-name">Arabic Lexicons</div>
+                            <div class="app-sub">Arabic Reader App</div>
+                        </div>
+                    </div>
+                    <div class="app-body">
+                        <p>
+                            The companion app built specifically for reading Arabic texts. Open any book and
+                            tap a word to get its meanings.
+                        </p>
+                        <ul class="feat-list">
+                            <li>Tap any word for its meaning, root, and notes</li>
+                            <li>Bookmark words and build your personal vocabulary list</li>
+                            <li>Adjust font size and line spacing for comfort</li>
+                            <li>Works offline once a book is downloaded</li>
+                        </ul>
+                        <p>
+                            All books listed on <span class="fa">مكتبة</span> are compatible with the reader. Look for
+                            the
+                            <em class="fa">"فتح الكتاب"</em> button on each card to open it, then copy the books text
+                            and paste it in the app.
+                        </p>
+
+                        <a href="/apps/arabic_lexicons.html" class="btn btn-main"
+                            style="font-family: var(--fe); max-width: fit-content; margin: 1.5rem auto 0.5rem; direction: ltr;">
+                            Learn more aobut the app
+                            <svg viewBox="0 0 24 24">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BEGINNER -->
+        <div id="panel-beginner" class="panel">
+            <div class="sh">
+                <h1>Beginner — مبتدئ</h1>
+                <p>Accessible stories and prose to start your Arabic reading journey</p>
+            </div>
+            <div class="grid" id="grid-beginner"></div>
+        </div>
+
+        <!-- INTERMEDIATE -->
+        <div id="panel-intermediate" class="panel">
+            <div class="sh">
+                <h1>Intermediate — متوسط</h1>
+                <p>Richer narratives that reward a growing reader</p>
+            </div>
+            <div class="grid" id="grid-intermediate"></div>
+        </div>
+
+        <!-- ADVANCED -->
+        <div id="panel-advanced" class="panel">
+            <div class="sh">
+                <h1>Advanced — متقدم</h1>
+                <p>Challenging masterworks that define Arabic literature</p>
+            </div>
+            <div class="grid" id="grid-advanced"></div>
+        </div>
+
+        <!-- POEMS -->
+        <div id="panel-poems" class="panel">
+            <div class="sh">
+                <h1>Poetry — شعر</h1>
+                <p>Classical and modern Arabic verse — the soul of the language</p>
+            </div>
+            <div class="grid" id="grid-poems"></div>
+        </div>
+
+    </main>
+
+    <script src="/br.js"></script>
+
+    <script>
+        /* ── DATA ──────────────────────────────────────────────────────────── */
+        /* Each book: titleAr, authorAr, descAr, descEn, cover, link, audio, pattern */
+        /* audio: null | URL string */
+
+
+        /* ── PATTERNS ─────────────────────────────────────────────────────── */
+        const P = {
+            "pat-1": `<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="300" fill="#2c1654"/><circle cx="100" cy="90" r="64" fill="none" stroke="#c8922a" stroke-width=".8" opacity=".42"/><circle cx="100" cy="90" r="47" fill="none" stroke="#c8922a" stroke-width=".5" opacity=".28"/><circle cx="100" cy="90" r="29" fill="none" stroke="#e8b84b" stroke-width=".5" opacity=".22"/><line x1="0" y1="160" x2="200" y2="160" stroke="#c8922a" stroke-width=".4" opacity=".22"/><line x1="100" y1="0" x2="100" y2="300" stroke="#c8922a" stroke-width=".4" opacity=".18"/></svg>`,
+            "pat-2": `<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="300" fill="#1a3a4a"/><rect x="18" y="18" width="164" height="264" fill="none" stroke="#c8922a" stroke-width=".8" opacity=".38"/><rect x="34" y="34" width="132" height="232" fill="none" stroke="#c8922a" stroke-width=".4" opacity=".22"/><line x1="18" y1="18" x2="182" y2="282" stroke="#c8922a" stroke-width=".4" opacity=".18"/><line x1="182" y1="18" x2="18" y2="282" stroke="#c8922a" stroke-width=".4" opacity=".18"/><circle cx="100" cy="150" r="36" fill="none" stroke="#e8b84b" stroke-width=".8" opacity=".32"/></svg>`,
+            "pat-3": `<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="300" fill="#3a1a1a"/><path d="M0,150 Q50,100 100,150 Q150,200 200,150" fill="none" stroke="#c8922a" stroke-width=".8" opacity=".42"/><path d="M0,110 Q50,60 100,110 Q150,160 200,110" fill="none" stroke="#c8922a" stroke-width=".4" opacity=".26"/><path d="M0,190 Q50,140 100,190 Q150,240 200,190" fill="none" stroke="#c8922a" stroke-width=".4" opacity=".26"/></svg>`,
+            "pat-4": `<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="300" fill="#1a3a2a"/><line x1="0" y1="0" x2="200" y2="300" stroke="#c8922a" stroke-width=".5" opacity=".26"/><line x1="60" y1="0" x2="260" y2="300" stroke="#c8922a" stroke-width=".4" opacity=".16"/><line x1="-60" y1="0" x2="140" y2="300" stroke="#c8922a" stroke-width=".4" opacity=".16"/><circle cx="100" cy="130" r="50" fill="none" stroke="#e8b84b" stroke-width=".8" opacity=".35"/></svg>`,
+            "pat-5": `<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="300" fill="#3a2a0a"/><path d="M100,15 L188,82 L154,178 L46,178 L12,82 Z" fill="none" stroke="#c8922a" stroke-width=".8" opacity=".42"/><path d="M100,42 L168,96 L141,170 L59,170 L32,96 Z" fill="none" stroke="#e8b84b" stroke-width=".4" opacity=".28"/></svg>`,
+            "pat-6": `<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="300" fill="#1a1a3a"/><circle cx="40" cy="60" r="22" fill="none" stroke="#c8922a" stroke-width=".5" opacity=".35"/><circle cx="160" cy="60" r="22" fill="none" stroke="#c8922a" stroke-width=".5" opacity=".35"/><circle cx="40" cy="240" r="22" fill="none" stroke="#c8922a" stroke-width=".5" opacity=".35"/><circle cx="160" cy="240" r="22" fill="none" stroke="#c8922a" stroke-width=".5" opacity=".35"/><rect x="62" y="88" width="76" height="124" fill="none" stroke="#e8b84b" stroke-width=".8" opacity=".35"/></svg>`,
+            "pat-7": `<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="300" fill="#2a3a1a"/><path d="M100,20 Q140,82 100,146 Q60,210 100,280" fill="none" stroke="#c8922a" stroke-width="1.1" opacity=".42"/><path d="M58,20 Q98,82 58,146 Q18,210 58,280" fill="none" stroke="#c8922a" stroke-width=".4" opacity=".24"/><path d="M142,20 Q182,82 142,146 Q102,210 142,280" fill="none" stroke="#c8922a" stroke-width=".4" opacity=".24"/></svg>`
+        };
+
+        /* ── ICONS (inline SVG) ─────────────────────────────────────────── */
+        const ICON_LINK = `<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+        const ICON_AUDIO = `<svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+
+        /* ── BUILD CARD ─────────────────────────────────────────────────── */
+        function escAttr(s) { return s.replace(/'/g, "&#39;").replace(/"/g, "&quot;"); }
+
+        function buildFallback(pat, titleAr, authorAr) {
+            const svg = P[pat] || P['pat-1'];
+            return `<div class="cab ${pat}">${svg}<span class="cab-t">${titleAr}</span><span class="cab-a">${authorAr}</span></div>`;
+        }
+
+        function buildCard(b) {
+            const pat = b.pattern || 'pat-1';
+            let coverHtml;
+            if (b.cover) {
+                const et = escAttr(b.titleAr), ea = escAttr(b.authorAr), ep = escAttr(pat);
+                coverHtml = `<img src="${b.cover}" alt="${et}" loading="lazy"
+      onerror="this.remove();this.parentNode.insertAdjacentHTML('beforeend',buildFallback('${ep}','${et}','${ea}'))">`;
+            } else {
+                coverHtml = buildFallback(pat, b.titleAr, b.authorAr);
+            }
+
+            const descHtml = (b.descAr ? `<span class="d-ar">${b.descAr}</span>` : '') +
+                (b.descEn ? `<span class="d-en">${b.descEn}</span>` : '');
+
+            const audioBtn = b.audio
+                ? `<a href="${b.audio}" target="_blank" rel="noopener" class="btn btn-audio">${ICON_AUDIO} استمع للكتاب</a>`
+                : '';
+
+            return `<article class="card">
+    <div class="cov">${coverHtml}</div>
+    <div class="info">
+      <div class="t-ar">${b.titleAr}</div>
+      <div class="a-ar">${b.authorAr}</div>
+      <div class="desc">${descHtml}</div>
+      <div class="btns">
+        <a href="${b.link}" target="_blank" rel="noopener" class="btn btn-main">${ICON_LINK} فتح الكتاب</a>
+        ${audioBtn}
+      </div>
+    </div>
+  </article>`;
+        }
+
+        /* ── RENDER ────────────────────────────────────────────────────── */
+        function render() {
+            ['beginner', 'intermediate', 'advanced', 'poems'].forEach(tab => {
+                document.getElementById('grid-' + tab).innerHTML = books[tab].map(buildCard).join('');
+            });
+        }
+
+        /* ── TAB SWITCH ────────────────────────────────────────────────── */
+        const TABS = ['welcome', 'beginner', 'intermediate', 'advanced', 'poems'];
+
+        function switchTab(tab) {
+            if (!TABS.includes(tab)) tab = 'welcome';
+            document.querySelectorAll('.tb').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+            document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.id === 'panel-' + tab));
+            history.replaceState(null, '', '#' + tab);
+        }
+
+        /* ── APP ICON FALLBACK ─────────────────────────────────────────── */
+        function showFbIcon() {
+            const wrap = document.getElementById('app-icon-wrap');
+            if (!wrap) return;
+            wrap.className = 'app-icon-fb';
+            wrap.innerHTML = `<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`;
+        }
+
+        /* ── INIT ──────────────────────────────────────────────────────── */
+        render();
+        const hash = location.hash.replace('#', '');
+        switchTab(TABS.includes(hash) ? hash : 'welcome');
+    </script>
 </body>
 
 </html>
